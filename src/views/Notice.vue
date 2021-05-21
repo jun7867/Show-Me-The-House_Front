@@ -1,11 +1,11 @@
 <template>
   <div>
     <h4 class="text-center">공지사항 목록</h4>
-    <div class="text-right">
-      <button class="btn btn-primary" @click="movePage">등록</button>
+    <div class="m-3 text-left">
+      <button class="btn btn-primary" @click="movePage">공지사항 등록</button>
     </div>
     <div v-if="notices.length > 0">
-      <table class="table table-boardered table-condensed">
+      <table class="table table-hover"  id="my-table">
         <colgroup>
           <col width="10%" />
           <col width="50%" />
@@ -27,6 +27,12 @@
           <td>{{ notice.regtime | toDate }}</td>
         </tr>
       </table>
+
+      <!-- pagination -->
+      <div class="mt-3">
+        <b-pagination v-model="currentPage" :total-rows="rows" align="center"></b-pagination>
+      </div>
+
     </div>
     <div v-else>게시글이 없습니다.</div>
   </div>
@@ -37,8 +43,17 @@ import moment from "moment";
 import { mapGetters} from "vuex";
 export default {
   name: "notice",
+  data() {
+    return {
+      perPage: 3,
+      currentPage: 1,
+    }
+  },
   computed:{
-    ...mapGetters(["notices"])
+    ...mapGetters(["notices"]),
+    rows() {
+        return this.notices.length
+      }
   },
   filters: {
     toDate: function (regtime) {

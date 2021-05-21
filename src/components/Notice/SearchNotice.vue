@@ -16,24 +16,24 @@
         <td>{{ notice.regtime | toDate }}</td>
       </tr>
       <tr>
-        <th>내용</th>
-        <td colspan="2" v-text="notice.content"></td>
+        <th colspan="2">내용</th>
       </tr>
     </table>
+    <div style="height: 200px;" class="md-3" v-text="notice.content"></div>
+
 
     <div v-if="notice.comment != null">
-      <h4>댓글</h4>
-      <div v-text="notice.comment"></div>
+      <div v-text="notice.comment" class="border"></div>
     </div>
 
     <div v-if="notice.comment == null">
       <h4>댓글 등록</h4>
       <textarea id="comment" v-model.lazy="notice.comment" ref="comment" cols="50" rows="5" ></textarea>
-      <button class="btn btn-primary" @click="updateHandler">등록</button>
+      <button class="btn btn-primary" @click="uploadComment">댓글 등록</button>
     </div>
 
 
-    <div class="text-right ">
+    <div class="mt-3">
       <router-link class="btn btn-primary text-light" to="/notice">목록</router-link>
       <router-link class="btn btn-primary text-light" :to="'/updateNotice?no=' + notice.no">수정</router-link>
       <router-link class="btn btn-primary text-light" :to="'/removeNotice?no=' + notice.no">삭제</router-link>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h4 class="text-center">공지사항 수정</h4>
-    <table class="table table-condensed w-25">
+    <table class="table table-condensed w-50 border" style="margin: 30px auto;">
       <tr>
         <th>제목</th>
         <td>
@@ -11,12 +11,12 @@
       <tr>
         <th>내용</th>
         <td>
-          <textarea id="content" cols="30" rows="10" ref="content" v-model="notice.content"></textarea>
+          <textarea id="content" cols="30" rows="10" ref="content" placeholder="내용을 입력해주세요" v-model="notice.content"></textarea>
         </td>
       </tr>
     </table>
 
-    <div class="text-right">
+    <div class="text-center" style="margin-top: 30px;">
       <button class="btn btn-primary" @click="updateHandler">수정</button>
       <button class="btn btn-primary" @click="moveHandler">목록</button>
     </div>
