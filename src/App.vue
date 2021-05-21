@@ -1,20 +1,24 @@
 <template>
-  <div id="app">
-    <nav-header></nav-header>
+  <v-app id="app" data-app>
+    <NavHeader />
+    <div style="height: 80px;"></div>
     <router-view />
-  </div>
+  </v-app>
 </template>
 
 <script>
-import NavHeader from '@/components/NavHeader.vue'
+import NavHeader from '@/components/NavHeader';
 export default {
   name:'App',
   components:{
     NavHeader,
-  }
-}
-</script>
+  },
+  data: () => (
+    {
 
+    }),
+};
+</script>
 
 <style>
 #app {
@@ -24,16 +28,13 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   padding: 30px;
 }
-
 #nav a {
   font-weight: bold;
   color: #2c3e50;
 }
-
 #nav a.router-link-exact-active {
   color: #42b983;
 }
