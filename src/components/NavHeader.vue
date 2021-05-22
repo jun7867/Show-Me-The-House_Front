@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="white" flat>
+  <v-app-bar app color="white" flat >
     <v-container class="py-0 fill-height">
       <router-link to="/">
          <v-img max-height="80" max-width="140" src="/img/smth3_remove.png" />

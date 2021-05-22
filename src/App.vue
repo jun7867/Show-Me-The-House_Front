@@ -1,17 +1,22 @@
 <template>
   <v-app id="app" data-app>
     <NavHeader />
-    <div style="height: 80px;"></div>
+    <div style="height: 130px;"> </div>
+    <div style="height: 100%;">
     <router-view />
+    </div>
+    <Footer />
   </v-app>
 </template>
 
 <script>
 import NavHeader from '@/components/NavHeader';
+import Footer from '@/components/Footer';
 export default {
   name:'App',
   components:{
     NavHeader,
+    Footer
   },
   data: () => (
     {
