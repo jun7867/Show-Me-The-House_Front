@@ -12,6 +12,7 @@ export default new Vuex.Store({
     dongs: [],
     sidoName: '', // 시도 이름
     gugunName: '', // 구군 이름
+    apts: [], // 아파트 정보 리스트
   },
   getters: {
     notices(state) {
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     gugunName(state) {
       return state.gugunName;
     },
+    apts(state) {
+      return state.apts;
+    },
   },
   mutations: {
     setNotices(state, payload) {
@@ -57,6 +61,9 @@ export default new Vuex.Store({
     },
     setGugunName(state, payload) {
       state.gugunName = payload;
+    },
+    setApts(state, payload) {
+      state.apts=payload;
     },
   },
   actions: {
@@ -152,6 +159,27 @@ export default new Vuex.Store({
         .finally(() => {    
           this.loading = false;
         })
-    }
+    },
+    getAptName(context, payload) {
+      http
+        .get(payload)
+        .then(({ data }) => {
+          context.commit("setApts", data);
+          
+        })
+        .catch(() => {
+          alert("AptName 오류 ");
+        })
+    },
+    getAptDong(context, payload) {
+      http
+        .get(payload)
+        .then(({ data }) => {
+          context.commit("setApts", data);
+        })
+        .catch(() => {
+          alert("AptDong 오류 ");
+        })
+    },
   },
 });

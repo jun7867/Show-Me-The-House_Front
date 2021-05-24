@@ -15,7 +15,6 @@
             v-model="isSearchDong"
             max-height="auto"
             autocomplete
-            :change="selectedOption"
           />
         </v-col>
       </v-row>
@@ -77,7 +76,7 @@
           <apt-search-bar @apt-name="sendAptName" />
         </v-col>
      <v-row>
-        <h3>총 {{ aptsBydong.length }} 개의 결과물이 있습니다.</h3>
+        <h3>총 {{ apts.length }} 개의 결과물이 있습니다.</h3>
       </v-row>
       <v-row>
         <v-col cols="12"
@@ -96,17 +95,15 @@
             <div hidden style="height:40px;"></div>
             <v-row style="margin-top:40px;">
               <v-col cols="6" align="left">
-                <!-- <apt-list
-                  :aptlist="aptsBydong"
+                <apt-list
+                  :aptlist="apts"
                   @select-apt="selectedApt"
-                  @select-img="selectedImage"
-                  :dongCode="selectDong"
-                /> -->
+                />
               </v-col>
-              <v-col cols="6">
+              <!-- <v-col cols="6">
                 <h2>아파트 상세정보</h2>
                 <apt-detail :apt="selectApt" :img="selectImage" />
-              </v-col>
+              </v-col> -->
             </v-row>
           </div>
         </v-col>
@@ -134,13 +131,10 @@ export default {
       dongCode: '',
       selectApt: '', // AptList에서 선택된 아파트
       selectImage: '', // AptList에서 선택된 아파트 이미지
-      apts: [], // selectGugun에 해당하는 아파트 배열
-      aptsBydong: [], // 동별 검색 후 가져온 아파트들
       selectSido: '', // 시도 코드
       selectGugun: '', // 구군 코드
       selectDong: '', // 동 이름
       dongName: '',
-      envs: [],
       isSearchDong: 0, // 선택한 option String
       options: [
         "동별 검색",
@@ -152,14 +146,18 @@ export default {
     this.$store.dispatch("getSidos");
   },
   computed:{
-    ...mapGetters(["sidos","guguns","dongs","sidoName","gugunName"]),
+    ...mapGetters(["sidos","guguns","dongs","sidoName","gugunName","apts"]),
   },
   methods: {
-    sendAptName(aptname) {
+    sendAptName: function(aptname) {
       console.log(aptname+"!!!");
+      this.$store.dispatch("getAptName",`/room/apt/aptName/`+aptname);
+
     },
-    sendDongCode(dongCode) {
-      console.log(dongCode+"@@@");
+    sendDongName: function() {
+      console.log(this.selectDong+"@@@");
+      this.$store.dispatch("getAptName",`/room/apt/dong/`+this.selectDong);
+
     },
     selectedApt: function(apt) {
       this.selectApt = apt;
@@ -174,12 +172,11 @@ export default {
       this.$store.dispatch("getDongs",`/map/sido/gugun/`+this.selectGugun);
     },
     selectedDong: function() {
-   
-      this.sendDongCode(this.selectGugun);
       this.$store.dispatch("getSidoName",`/map/getSiName/`+this.selectSido);
       this.$store.dispatch("getGugunName",`/map/getGugunName/`+this.selectGugun);
       console.log(this.gugunName);
       console.log(this.selectDong);
+      this.sendDongName();
       // 시,군,동에 연결된 정보들 여기서 연결 가능..! (상가 정보?)
     },
   },
