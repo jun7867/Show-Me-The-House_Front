@@ -61,6 +61,7 @@ export default {
       sidebar: false,
       menus: [
         { title: '부동산 정보', path: '/apt' },
+        { title: '관심 매물', path: '/favorite' },
         { title: '공지 게시판', path: '/notice' },
       ],
       logins: [

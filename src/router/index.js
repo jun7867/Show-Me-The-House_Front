@@ -6,6 +6,9 @@ import CreateNotice from '@/components/Notice/CreateNotice.vue';
 import SearchNotice from '@/components/Notice/SearchNotice.vue';
 import UpdateNotice from '@/components/Notice/UpdateNotice.vue';
 import RemoveNotice from '@/components/Notice/RemoveNotice.vue';
+
+import Apt from '@/views/Apt.vue';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -45,6 +48,12 @@ const routes = [
         path: '/removeNotice',
         name: 'RemoveNotice',
         component: RemoveNotice,
+    },
+      // 공지사항 삭제
+      {
+        path: '/apt',
+        name: 'Apt',
+        component: Apt,
       },
 ];
 

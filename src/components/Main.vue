@@ -22,14 +22,14 @@
     <v-row>
       <!-- 관심 매물 카드 -->
       <v-col cols="4">
-        <v-card class="mx-auto" max-width="100%">
+        <v-card class="mx-auto" max-width="100%" to="/favorite">
           <v-toolbar color="black" dark>
             <v-toolbar-title >관심 매물</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
 
-          <v-container fluid>
-            <v-row dense>
+          <v-container>
+            <v-row>
               <v-col v-for="card in cards" :key="card.title" :cols="card.flex">
                 <v-card>
                   <v-img
@@ -79,9 +79,6 @@ export default {
     imgs: [
       require('../assets/khome1.jpeg'),
       require('../assets/khome2.jpeg'),
-      require('../assets/home1.jpg'),
-      require('../assets/home2.jpg'),
-      require('../assets/home3.jpg'),
     ],
     tab: null,
     items: ['아파트정보'],
@@ -99,6 +96,9 @@ export default {
   },
   components: {},
   methods: {
+    // moveFavorite() : {
+
+    // }
   },
 };
 </script>
