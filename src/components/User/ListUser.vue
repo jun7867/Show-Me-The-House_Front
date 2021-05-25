@@ -90,7 +90,7 @@
       </template>
     </b-table>
 
-    <b-col sm="7" md="6" class="my-1">
+    <b-col sm="7" md="6" class="my-1" >
         <b-pagination
           v-model="currentPage"
           :total-rows="totalRows"

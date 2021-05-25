@@ -8,7 +8,7 @@
             <b-form-group label="Enter your password">
                 <b-form-input v-model="user.pwd" type="password"></b-form-input>
             </b-form-group>
-            <b-button size="lg" type="submit">Signin</b-button>
+            <b-button size="lg" @click="signin">Signin</b-button>
         </form>
         <router-link :to="{ name:'Signup' }">Sigiup</router-link>
     </div>

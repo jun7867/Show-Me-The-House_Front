@@ -2,6 +2,7 @@
   <!-- 카카오맵 Vue -->
   <div>
     <div id="map" style="width:100%;height:500px;"></div>
+
     <div hidden>
       {{ aptlist }}
     </div>
@@ -17,13 +18,17 @@ export default {
     };
   },
   props: {
-    aptlist: Array,
     si: String,
     gugun: String,
     dong: String,
+    aptlist: Array,
+  },
+  created(){
+      this.initMap();
   },
   mounted() {
-    window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+    // window.kakao && window.kakao.maps ?  : this.addScript();
+    this.addScript();
   },
   updated() {
     this.addMarker();
@@ -32,7 +37,7 @@ export default {
     initMap() {
       this.container = document.getElementById('map');
       var options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: new kakao.maps.LatLng(37.497954, 127.027564),
         level: 3,
       };
       let map = new kakao.maps.Map(this.container, options);
@@ -43,6 +48,7 @@ export default {
       marker.setMap(map);
     },
     addScript() {
+      console.log("addScript");
       const script = document.createElement('script'); /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
@@ -50,6 +56,7 @@ export default {
       document.head.appendChild(script);
     },
     addMarker() {
+      console.log("addMarker");
       var mapOption = {
         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
         level: 4, // 지도의 확대 레벨
