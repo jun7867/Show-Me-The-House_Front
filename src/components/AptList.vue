@@ -1,60 +1,101 @@
 <template>
   <!-- 검색된 아파트 리스트 정보 Vue -->
   <div>
-    <v-card elevation="16" max-width="1400" class="mx-auto">
-      <v-virtual-scroll :items="aptlist" height="500" item-height="500">
-        <div v-if="aptlist.length > 0">
-          <table class="table table-hover"  id="my-table">
-            <colgroup>
-               <col width="10%" />
-              <col width="20%" />
-              <col width="20%" />
-              <col width="13%" />
-              <col width="13%" />
-              <col width="15%" />
-              <col width="15%" />
-            </colgroup>
-            <tr>
-              <th>No.</th>
-              <th>동 이름</th>
-              <th>아파트 이름</th>
-              <th>실거래(만원)</th>
-              <th>거래 날짜</th>
-              <th>지어진 년도</th>
-              <th>층수</th>
-            </tr>
-            <tr v-for="(apt, index) in aptlist" :key="index">
-              <td>{{ apt.no }}</td>
-              <td>{{ apt.dong }}</td>
-              <!-- <td v-text="apt.aptName"> -->
-                <router-link :to="'detailApt?no=' + apt.no">{{ apt.aptName }}</router-link>
-              <!-- </td> -->
-              <td v-text="apt.dealAmount">만원</td>
-              <td>{{apt.dealYear}}.{{apt.dealMonth}}</td>
-              <td v-text="apt.buildYear"></td>
-              <td v-text="apt.floor"></td>
-            </tr>
-          </table>
+    <b-container fluid>
+    <!-- User Interface controls -->
+    <b-row>
+      <b-col lg="6" class="my-1">
+        <b-form-group
+          label="검색"
+          label-for="filter-input"
+          label-cols-sm="3"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+        >
+          <b-input-group size="sm">
+            <b-form-input
+              id="filter-input"
+              v-model="filter"
+              type="search"
+              placeholder="Type to Search"
+            ></b-form-input>
 
-            <!-- pagination -->
-            <div class="mt-3">
-              <b-pagination v-model="currentPage" :total-rows="rows" align="center"></b-pagination>
-            </div>
+            <b-input-group-append>
+              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+      <b-col sm="2" md="6" class="my-1">
+        <b-form-group
+          label="Per page"
+          label-for="per-page-select"
+          label-cols-sm="6"
+          label-cols-md="4"
+          label-cols-lg="3"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+        >
+          <b-form-select
+            id="per-page-select"
+            v-model="perPage"
+            :options="pageOptions"
+            size="sm"
+          ></b-form-select>
+        </b-form-group>
+      </b-col>
 
-          </div>
-          <div v-else>아파트 정보가 없습니다.</div>
-        <!-- <template v-slot:default="{ item }">
-          <v-list-item>
-            <apt-list-item
-              :key="item"
-              :apt="item"
-              @select-apt="selectApt"
-              @select-img="selectImage"
-            />
-          </v-list-item>
-        </template> -->
-      </v-virtual-scroll>
-    </v-card>
+    </b-row>
+    <!-- Main table element -->
+    <b-table
+      :items="aptlist"
+      :fields="fields"
+      :current-page="currentPage"
+      :per-page="perPage"
+      :filter="filter"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      :sort-direction="sortDirection"
+      stacked="md"
+      show-empty
+      small
+      @filtered="onFiltered"
+    >
+    
+
+      <template #cell(aptName)="row">
+        <router-link :to="'detailApt?no=' + row.item.no">{{ row.item.aptName }}</router-link>
+      </template>
+      <template #cell(dealDate)="row">
+        <p>{{row.item.dealYear}}.{{row.item.dealMonth}}</p>
+      </template>
+
+      <template #row-details="row">
+        <b-card>
+          <ul>
+            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+          </ul>
+        </b-card>
+      </template>
+    </b-table>
+
+    <b-col sm="7" md="6" class="my-1">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          align="fill"
+          size="sm"
+          class="my-0"
+        ></b-pagination>
+      </b-col>
+  </b-container>
+
+
+
+
   </div>
 </template>
 
@@ -73,7 +114,28 @@ export default {
   data() {
     return {
       aptlistBydong: [],
+      fields: [
+            { key: 'no', label: 'No', sortable: true, sortDirection: 'desc' },
+            { key: 'dong', label: '동 이름', sortable: true, sortDirection: 'desc' },
+            { key: 'aptName', label: '아파트 이름', sortable: true, sortDirection: 'desc' },
+            { key: 'dealAmount', label: '실거래(만원)', sortable: true, sortDirection: 'desc' },
+            { key: 'dealDate', label: '거래 날짜', sortable: true, sortDirection: 'desc' },
+            { key: 'buildYear', label: '지어진 년도', sortable: true, sortDirection: 'desc' },
+            { key: 'floor', label: '층수', sortable: true, sortDirection: 'desc' }
+        ],
+        totalRows: 1,
+        currentPage: 1,
+        perPage: 5,
+        pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
+        sortBy: '',
+        sortDesc: false,
+        sortDirection: 'asc',
+        filter: null,
+        filterOn: []
     };
+  },
+  created() {
+    this.totalRows = this.aptlist.length;
   },
   methods: {
     selectApt: function(apt) {
@@ -82,6 +144,11 @@ export default {
     selectImage: function(img) {
       this.$emit('select-img', img);
     },
+    onFiltered(filteredItems) {
+        // Trigger pagination to update the number of buttons/pages due to filtering
+        this.totalRows = filteredItems.length
+        this.currentPage = 1
+      },
   },
 };
 </script>
