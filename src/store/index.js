@@ -1,9 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import http from "@/util/http-common";
+import axios from 'axios';
+import createPersistedState from 'vuex-persistedstate';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  //npm install —-save vuex-persistedstate
+  plugins: [createPersistedState()],
   state: {
     notices: [],
     notice: {},
@@ -13,6 +17,10 @@ export default new Vuex.Store({
     sidoName: '', // 시도 이름
     gugunName: '', // 구군 이름
     apts: [], // 아파트 정보 리스트
+
+    accessToken: null,
+    userId: '',
+    userName: '',
   },
   getters: {
     notices(state) {
@@ -39,6 +47,15 @@ export default new Vuex.Store({
     apts(state) {
       return state.apts;
     },
+    getAccessToken(state) {
+      return state.accessToken;
+    },
+    getUserId(state) {
+      return state.userId;
+    },
+    getUserName(state) {
+      return state.userName;
+    },
   },
   mutations: {
     setNotices(state, payload) {
@@ -64,6 +81,16 @@ export default new Vuex.Store({
     },
     setApts(state, payload) {
       state.apts=payload;
+    },
+    LOGIN(state, payload) {
+      state.accessToken = payload['auth-token'];
+      state.userId = payload['user-id'];
+      state.userName = payload['user-name'];
+    },
+    LOGOUT(state) {
+      state.accessToken = null;
+      state.userId = '';
+      state.userName = '';
     },
   },
   actions: {
@@ -114,7 +141,6 @@ export default new Vuex.Store({
           this.errored = true;
         })
         .finally(() => {
-         
           this.loading = false;
         })
     },
@@ -180,6 +206,32 @@ export default new Vuex.Store({
         .catch(() => {
           alert("AptDong 오류 ");
         })
+    },
+    LOGIN(context, user) {
+      return axios
+        .post(`http://localhost:9999/vue/api/member/confirm/login`, user)
+        .then((response) => {
+          if (`${response.data['status']}` == 'true') {
+            alert(
+              '반갑습니다! ' +
+                `${response.data['user-name']}` +
+                '님!'
+            );
+            context.commit('LOGIN', response.data);
+            axios.defaults.headers.common[
+              'auth-token'
+            ] = `${response.data['auth-token']}`;
+          } else {
+            alert('올바른 계정정보를 입력하세요.');
+          }
+        })
+        .catch(() => {
+          console.log("in vue " + user.userId);
+        });
+    },
+    LOGOUT(context) {
+      context.commit('LOGOUT');
+      axios.defaults.headers.common['auth-token'] = undefined;
     },
   },
 });

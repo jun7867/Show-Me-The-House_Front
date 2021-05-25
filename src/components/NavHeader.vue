@@ -16,22 +16,22 @@
       <v-spacer></v-spacer>
 
       <!-- 로그인 했다면 -->
-      <!-- <div v-if="user.userno == 1"> -->
+      <div v-if="user.user_no == 1">
         <div>
-        <v-btn to="/memberMgt">관리자페이지</v-btn>
-        <v-btn to="/me">마이페이지</v-btn>
+        <v-btn to="/list-user">관리자페이지</v-btn>
         <v-btn @click.prevent="onClickLogout">로그아웃</v-btn>
+      </div>
       </div>
 
       <!-- 관리자가 아니라면 -->
-      <!-- <div v-else-if="getAccessToken"> -->
+      <div v-else-if="getAccessToken">
         <div>
-        <v-btn to="/me">마이페이지</v-btn>
+        <v-btn to="/mypage">마이페이지</v-btn>
         <v-btn @click.prevent="onClickLogout">로그아웃</v-btn>
       </div>
-
+      </div>
       <!-- 로그인을 안했다면 -->
-      <!-- <div v-else> -->
+      <div v-else>
         <div>
         <v-btn
           v-for="(login, index) in logins"
@@ -42,13 +42,14 @@
           {{ login.title }}
         </v-btn>
       </div>
+      </div>
     </v-container>
   </v-app-bar>
 </template>
 
  <script>
-// import { mapGetters } from 'vuex';
-// import axios from 'axios';
+import { mapGetters } from 'vuex';
+import axios from 'axios';
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
@@ -65,32 +66,33 @@ export default {
         { title: '공지 게시판', path: '/notice' },
       ],
       logins: [
-        { title: '로그인', path: '/login' },
-        { title: '회원가입', path: '/joinMember' },
+        { title: '로그인', path: '/signin' },
+        { title: '회원가입', path: '/signup' },
       ],
     };
   },
-//   created() {
-//     // 가져온 Token값을 header에 넣어주는 작업 실시.
-//     axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
-//     axios
-//       .get(`${SERVER_URL}/user/info`)
-//       .then((response) => {
-//         this.user = response.data.user;
-//       })
-//       .catch(() => {
-//         // this.$store.dispatch('LOGOUT').then(() => this.$router.replace('/'));
-//       });
-//   },
-//   computed: {
-//     ...mapGetters(['getAccessToken', 'getUserId', 'getUserName']),
-//   },
-//   methods: {
-//     onClickLogout() {
-//       this.$store
-//         .dispatch('LOGOUT')
-//         .then(() => this.$router.replace('/').catch(() => {}));
-//     },
-//   },
+  created() {
+    // 가져온 Token값을 header에 넣어주는 작업 실시.
+    axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
+    axios
+      .get(`http://localhost:9999/vue/api/member/info`)
+      .then((response) => {
+        this.user = response.data.user;
+      })
+      .catch(() => {
+        // this.$store.dispatch('LOGOUT').then(() => this.$router.replace('/'));
+      });
+  },
+  computed: {
+    ...mapGetters(['getAccessToken', 'getUserId', 'getUserName']),
+  },
+  methods: {
+    onClickLogout() {
+      this.$store
+        .dispatch('LOGOUT')
+        .then(() => this.$router.replace('/').catch(() => {}));
+      this.$router.go();
+    },
+  },
 };
 </script>
