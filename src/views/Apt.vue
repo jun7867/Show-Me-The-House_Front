@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-       <v-row>
+      <v-row>
         <v-col>
           <h2>부동산 매매 정보</h2>
         </v-col>
@@ -87,28 +87,10 @@
             :aptlist="apts"
         /></v-col>
       </v-row>
-
-       <!-- apt 상세정보 -->
-      <v-row>
-        <v-col cols="12">
-          <div id="aptdetail">
-            <div hidden style="height:40px;"></div>
-            <v-row style="margin-top:40px;">
-              <v-col cols="12" align="left">
-                <apt-list
+      <apt-list
                   :aptlist="apts"
                   @select-apt="selectedApt"
                 />
-              </v-col>
-              <!-- <v-col cols="6">
-                <h2>아파트 상세정보</h2>
-                <apt-detail :apt="selectApt" :img="selectImage" />
-              </v-col> -->
-            </v-row>
-          </div>
-        </v-col>
-      </v-row>
-     
     </v-container>
     
     
