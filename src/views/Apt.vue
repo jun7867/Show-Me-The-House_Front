@@ -84,7 +84,7 @@
             :si="sidoName"
             :gugun="gugunName"
             :dong="selectDong"
-            :aptlist="aptsBydong"
+            :aptlist="apts"
         /></v-col>
       </v-row>
 
@@ -94,7 +94,7 @@
           <div id="aptdetail">
             <div hidden style="height:40px;"></div>
             <v-row style="margin-top:40px;">
-              <v-col cols="6" align="left">
+              <v-col cols="12" align="left">
                 <apt-list
                   :aptlist="apts"
                   @select-apt="selectedApt"
@@ -119,12 +119,13 @@
 import KakaoMap from '@/components/KakaoMap.vue';
 import { mapGetters} from "vuex";
 import AptSearchBar from '@/components/AptSearchBar.vue';
-
+import AptList from '@/components/AptList.vue';
 export default {
   name: 'Apt',
   components: {
     KakaoMap,
     AptSearchBar,
+    AptList,
   },
   data() {
     return {
