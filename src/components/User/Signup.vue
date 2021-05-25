@@ -49,7 +49,7 @@
                     return false;
                 }
 
-                const response = await axios.post('http://localhost:9999/vue/api/member', {
+                const response = await axios.post('http://localhost:8090/vue/api/member', {
                     user_id: this.user_id,
                     pwd: this.pwd,
                     cfmpwd: this.cfmpwd,

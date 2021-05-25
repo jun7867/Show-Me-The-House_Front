@@ -134,7 +134,7 @@ import axios from 'axios';
     },
     created() {
         axios
-        .get(`http://localhost:9999/vue/api/member/`)
+        .get(`http://localhost:8090/vue/api/member/`)
         .then(({ data }) => {
         this.users = data;
         this.totalRows = data.length;

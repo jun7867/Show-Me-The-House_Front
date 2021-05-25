@@ -32,7 +32,7 @@ export default {
         axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
         axios
         // .get(`http://localhost:9999/vue/api/member/info`)
-        .get(`http://localhost:9999/vue/api/member/id/${this.$store.state.userId}`)
+        .get(`http://localhost:8090/vue/api/member/id/${this.$store.state.userId}`)
         .then((response) => {
             this.user = response.data;
         })
@@ -46,7 +46,7 @@ export default {
         },
         deleteMember(no){
             axios
-                .delete(`http://localhost:9999/vue/api/member/` + no)
+                .delete(`http://localhost:8090/vue/api/member/` + no)
                 .then((response) => {
                     if (response.data == 'success') {
                         alert('삭제처리를 하였습니다.');

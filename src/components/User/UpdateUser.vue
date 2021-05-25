@@ -30,7 +30,7 @@ export default {
     created() {
         axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
         axios
-        .get(`http://localhost:9999/vue/api/member/${this.$route.query.no}`)
+        .get(`http://localhost:8090/vue/api/member/${this.$route.query.no}`)
         .then((response) => {
             this.user = response.data;
         })
@@ -41,7 +41,7 @@ export default {
     methods: {
         updateMember(){
             axios
-            .put(`http://localhost:9999/vue/api/member`, this.user)
+            .put(`http://localhost:8090/vue/api/member`, this.user)
             .then((response) => {
                 if(response.data == 'success'){
                     alert("회원정보가 수정되었습니다.");

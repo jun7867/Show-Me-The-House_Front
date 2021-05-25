@@ -209,7 +209,7 @@ export default new Vuex.Store({
     },
     LOGIN(context, user) {
       return axios
-        .post(`http://localhost:9999/vue/api/member/confirm/login`, user)
+        .post(`http://localhost:8090/vue/api/member/confirm/login`, user)
         .then((response) => {
           if (`${response.data['status']}` == 'true') {
             alert(
