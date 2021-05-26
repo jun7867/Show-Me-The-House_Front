@@ -61,6 +61,7 @@
       show-empty
       small
       @filtered="onFiltered"
+      data-toggle="table"
     >
     
 
@@ -73,28 +74,9 @@
         </b-button>
       </template>
       <template #cell(favorite)="row">
-        <div class="favoriting">
-          <label
-                class="favorite__heart"
-                v-bind:class="{'favorite__heart__selected': row.field.value}"
-                >
-            <input
-                    class="favorite__checkbox"
-                    type="checkbox"
-                    v-bind:name="name"
-                    v-bind:value="row.field.value"
-                    v-model="row.field.value"
-                    @click="addFavorite(row.item.no)">
-            ❤
-        </label>
 
-        <label class="form-checkbox">
-    					<input type="checkbox" :value="row.item.no" v-model="selected">
-						<i class="form-icon"></i>
-  			</label>
+        <b-button size="sm" @click="addFavorite(row)" > 등록 / 삭제 </b-button>
 
-        <b-button size="sm" @click="addFavorite(row.item.no)" >관심매물 등록</b-button>
-    </div>
       </template>
       
 
@@ -152,7 +134,7 @@ export default {
             { key: 'buildYear', label: '지어진 년도', sortable: true, sortDirection: 'desc' },
             { key: 'floor', label: '층수', sortable: true, sortDirection: 'desc' },
             { key: 'detail', label: '상세 보기', sortable: true, sortDirection: 'desc' },
-            { key: 'favorite', label: '관심매물', value: false}
+            { key: 'favorite', label: '관심매물'}
         ],
         totalRows: 1,
         currentPage: 1,
@@ -183,6 +165,10 @@ export default {
         });
 
   },
+  updated(){
+    if(this.aptlistBydong.value)
+      this.aptlistBydong.value = !this.aptlistBydong.value;
+  },
   methods: {
     // selectImage: function(img) {
     //   this.$emit('select-img', img);
@@ -194,10 +180,16 @@ export default {
     favorite (row) {
       console.log(row.field.value);
     },
-    addFavorite(no){
-      console.log(no);
-      axios
-                .post(`http://localhost:8090/api/favorite`, {housedeal_no: no, user_no: this.user.user_no})
+    addFavorite(row){
+      if(this.user == ''){
+        alert("로그인 후 이용해주세요");
+      }else if(row.item.value == true){
+        this.deleteFavorite(row.item.no);
+        row.item.value = false;
+      }
+      else {
+              axios
+                .post(`http://localhost:8090/api/favorite`, {housedeal_no: row.item.no, user_no: this.user.user_no})
                 .then((response) => {
                     if (response.data == 'success') {
                         alert('관심매물로 등록하였습니다.');
@@ -210,6 +202,8 @@ export default {
                     this.errored = true;
                 })
                 .finally(() => (this.loading = false));
+                row.item.value = true;
+      }
     },
     deleteFavorite(no){
         axios
