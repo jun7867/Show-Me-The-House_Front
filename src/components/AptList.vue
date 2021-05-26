@@ -2,7 +2,6 @@
   <!-- 검색된 아파트 리스트 정보 Vue -->
   <div>
     <b-container fluid>
-    <!-- User Interface controls -->
     <b-row>
       <b-col lg="6" class="my-1">
         <b-form-group
@@ -33,7 +32,7 @@
           label-for="per-page-select"
           label-cols-sm="6"
           label-cols-md="4"
-          label-cols-lg="3"
+          label-cols-lg="5"
           label-align-sm="right"
           label-size="sm"
           class="mb-0"
@@ -66,6 +65,7 @@
     
 
       <template #cell(aptName)="row">
+        <!-- 아파트 이름 누르면 상세페이지 이동? 모달?  -->
         <router-link :to="'detailApt?no=' + row.item.no">{{ row.item.aptName }}</router-link>
       </template>
       <template #cell(dealDate)="row">
@@ -81,7 +81,7 @@
       </template>
     </b-table>
 
-    <b-col sm="7" md="6" class="my-1">
+    <b-col sm="7" md="6" class="my-1 mx-auto">
         <b-pagination
           v-model="currentPage"
           :total-rows="totalRows"
@@ -92,20 +92,14 @@
         ></b-pagination>
       </b-col>
   </b-container>
-
-
-
-
   </div>
 </template>
 
 <script>
-// import AptListItem from '@/components/AptListItem.vue';
 
 export default {
   name: 'AptList',
   components: {
-    // AptListItem,
   },
   props: {
     aptlist: Array,
@@ -138,14 +132,10 @@ export default {
     this.totalRows = this.aptlist.length;
   },
   methods: {
-    selectApt: function(apt) {
-      this.$emit('select-apt', apt);
-    },
-    selectImage: function(img) {
-      this.$emit('select-img', img);
-    },
+    // selectImage: function(img) {
+    //   this.$emit('select-img', img);
+    // },
     onFiltered(filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
         this.totalRows = filteredItems.length
         this.currentPage = 1
       },
@@ -153,4 +143,3 @@ export default {
 };
 </script>
 
-<style></style>
