@@ -85,7 +85,7 @@ export default {
       require('../assets/khome2.jpeg'),
     ],
     tab: null,
-    items: ['실시간 추천 아파트 매물'],
+    items: ['최신 실거래 아파트 매물'],
     fields: [
             { key: 'dong', label: '동 이름' },
             { key: 'aptName', label: '아파트 이름'},
@@ -103,6 +103,7 @@ export default {
 
     ],
   }),
+
   created() {
 
     this.init();

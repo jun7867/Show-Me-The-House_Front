@@ -88,10 +88,10 @@
             ❤
         </label>
 
-        <label class="form-checkbox">
+        <!-- <label class="form-checkbox">
     					<input type="checkbox" :value="row.item.no" v-model="selected">
 						<i class="form-icon"></i>
-  			</label>
+  			</label> -->
 
         <b-button size="sm" @click="addFavorite(row.item.no)" >관심매물 등록</b-button>
     </div>
@@ -123,17 +123,24 @@
         ></b-pagination>
       </b-col>
   </b-container>
+  <LineChart/>
+  <div style="width:800px">
+    
+  </div>  
+
   </div>
 </template>
 
 <script>
 
 import axios from 'axios';
-// import AptListItem from '@/components/AptListItem.vue';
+import LineChart from '@/components/LineChart.vue'
+
 
 export default {
   name: 'AptList',
   components: {
+    LineChart,
   },
   props: {
     aptlist: Array,
@@ -141,6 +148,11 @@ export default {
   },
   data() {
     return {
+      chartData: {
+        Books: 24,
+        Magazine: 30,
+        Newspapers: 10
+      },
       user:'',
       aptlistBydong: [],
       fields: [
