@@ -44,8 +44,28 @@
         methods: {
             async signup () {
 
+                if(!this.user_id){
+                    alert("아이디를 입력해주세요");
+                    return false;
+                }
+                if(!this.name){
+                    alert("이름을 입력해주세요");
+                    return false;
+                }
+                if(!this.pwd){
+                    alert("비밀번호를 입력해주세요");
+                    return false;
+                }
+                if(!this.cfmpwd){
+                    alert("확인 비밀번호를 입력해주세요");
+                    return false;
+                }
                 if (this.pwd != this.cfmpwd){
                     alert("입력한 비밀번호를 확인해주세요");
+                    return false;
+                }
+                if(!this.email){
+                    alert("이메일을 입력해주세요");
                     return false;
                 }
 

@@ -22,3 +22,21 @@ new Vue({
   vuetify,
   render: (h) => h(App),
 }).$mount("#app");
+
+Vue.component('favorite', {
+  template: '#template-favorite',
+  data: function() {
+      return { };
+  },
+  props: {
+      'value': {
+          type: Boolean,
+          default: false
+      }
+  },
+  methods: {
+      favorite: function() {
+          this.value = !this.value;
+      }
+  }
+});

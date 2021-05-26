@@ -71,7 +71,7 @@ export default {
       ],
     };
   },
-  updated() {
+  created() {
     // 가져온 Token값을 header에 넣어주는 작업 실시.
     axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
     axios

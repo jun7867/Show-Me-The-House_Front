@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>{{ msg }}</h1>
+        <h1>Login</h1>
         <form @submit.prevent="signin">
             <b-form-group label="Enter your user id">
                 <b-form-input v-model="user.user_id" type="text"></b-form-input>

@@ -11,6 +11,7 @@ import Signup from "@/components/User/Signup.vue";
 import Mypage from "@/components/User/Mypage.vue";
 import UpdateUser from "@/components/User/UpdateUser.vue";
 import ListUser from "@/components/User/ListUser.vue";
+import Favorite from "@/components/Favorite.vue";
 
 import Apt from '@/views/Apt.vue';
 
@@ -90,6 +91,13 @@ const routes = [
       name: "ListUser",
       component: ListUser,
     },
+    // 관심 매물
+    {
+      path: "/favorite",
+      name: "Favorite",
+      component: Favorite,
+    },
+
 ];
 
 const router = new VueRouter({

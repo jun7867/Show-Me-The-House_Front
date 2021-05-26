@@ -65,12 +65,42 @@
     >
     
 
-      <template #cell(aptName)="row">
+      <!-- <template #cell(aptName)="row">
         <router-link :to="'detailApt?no=' + row.item.no">{{ row.item.aptName }}</router-link>
-      </template>
+      </template> -->
       <template #cell(dealDate)="row">
         <p>{{row.item.dealYear}}.{{row.item.dealMonth}}</p>
       </template>
+      <template #cell(detail)="row">
+        <b-button size="sm" @click="row.toggleDetails">
+          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+        </b-button>
+      </template>
+      <template #cell(favorite)="row">
+        <div class="favoriting">
+          <label
+                class="favorite__heart"
+                v-bind:class="{'favorite__heart__selected': row.field.value}"
+                >
+            <input
+                    class="favorite__checkbox"
+                    type="checkbox"
+                    v-bind:name="name"
+                    v-bind:value="row.field.value"
+                    v-model="row.field.value"
+                    @click="addFavorite(row.item.no)">
+            ❤
+        </label>
+
+        <label class="form-checkbox">
+    					<input type="checkbox" :value="row.item.no" v-model="selected">
+						<i class="form-icon"></i>
+  			</label>
+
+        <b-button size="sm" @click="addFavorite(row.item.no)" >관심매물 등록</b-button>
+    </div>
+      </template>
+      
 
       <template #row-details="row">
         <b-card>
@@ -100,8 +130,8 @@
 </template>
 
 <script>
+import axios from 'axios';
 // import AptListItem from '@/components/AptListItem.vue';
-
 export default {
   name: 'AptList',
   components: {
@@ -113,6 +143,7 @@ export default {
   },
   data() {
     return {
+      user:'',
       aptlistBydong: [],
       fields: [
             { key: 'no', label: 'No', sortable: true, sortDirection: 'desc' },
@@ -121,7 +152,9 @@ export default {
             { key: 'dealAmount', label: '실거래(만원)', sortable: true, sortDirection: 'desc' },
             { key: 'dealDate', label: '거래 날짜', sortable: true, sortDirection: 'desc' },
             { key: 'buildYear', label: '지어진 년도', sortable: true, sortDirection: 'desc' },
-            { key: 'floor', label: '층수', sortable: true, sortDirection: 'desc' }
+            { key: 'floor', label: '층수', sortable: true, sortDirection: 'desc' },
+            { key: 'detail', label: '상세 보기', sortable: true, sortDirection: 'desc' },
+            { key: 'favorite', label: '관심매물', value: false}
         ],
         totalRows: 1,
         currentPage: 1,
@@ -131,11 +164,26 @@ export default {
         sortDesc: false,
         sortDirection: 'asc',
         filter: null,
-        filterOn: []
+        filterOn: [],
+        name: 'favorite',
+        selelcted: [],
     };
   },
   created() {
     this.totalRows = this.aptlist.length;
+
+    // 가져온 Token값을 header에 넣어주는 작업 실시.
+    axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
+    axios
+    .get(`http://localhost:8090/vue/api/member/info`)
+    .then((response) => {
+        this.user = response.data.user;
+        console.log("user : "+ this.user.user_no);
+    })
+    .catch(() => {
+        // this.$store.dispatch('LOGOUT').then(() => this.$router.replace('/'));
+        });
+
   },
   methods: {
     selectApt: function(apt) {
@@ -145,12 +193,81 @@ export default {
       this.$emit('select-img', img);
     },
     onFiltered(filteredItems) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
         this.totalRows = filteredItems.length
         this.currentPage = 1
       },
+    favorite (row) {
+      console.log(row.field.value);
+    },
+    addFavorite(no){
+      axios
+                .post(`http://localhost:8090/api/favorite`, {housedeal_no: no, user_no: this.user.user_no})
+                .then((response) => {
+                    if (response.data == 'success') {
+                        alert('관심매물로 등록하였습니다.');
+                    } else {
+                        alert('관심매물로 등록하지 못했습니다.');
+                        this.$router.push('/');
+                    }
+                })
+                .catch(() => {
+                    this.errored = true;
+                })
+                .finally(() => (this.loading = false));
+    },
+    deleteFavorite(no){
+        axios
+                .delete(`http://localhost:8090/api/favorite/${this.user.user_no}/` + no)
+                .then((response) => {
+                    if (response.data == 'success') {
+                        alert('관심매물 목록에서 삭제되었습니다.');
+                    } else {
+                        alert('관심매물 목록에서 삭제하지 못했습니다.');
+                        // this.$router.push('/');
+                    }
+                })
+                .catch(() => {
+                    this.errored = true;
+                })
+                .finally(() => (this.loading = false));
+      }
   },
 };
 </script>
 
-<style></style>
+
+<style>
+    .favoriting{
+        display: inline-block
+    }
+    .favorite__heart {
+        display: inline-block;
+        padding: 3px;
+        vertical-align: middle;
+        line-height: 1;
+        font-size: 16px;
+        color: #ABABAB;
+        cursor: pointer;
+        -webkit-transition: color .2s ease-out;
+        transition: color .2s ease-out;
+    }
+    .favorite__heart.is-disabled:hover {
+        cursor: default;
+    }
+    .favorite__checkbox {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+    }
+    .favorite__heart__selected{
+        color: #df470b;
+    }
+    li{
+      list-style: none
+      }
+</style>
