@@ -93,12 +93,19 @@ export default {
     ],
   }),
   created() {
+    this.init();
   },
   components: {},
   methods: {
+    init() {
+      
+    }
     // moveFavorite() : {
 
     // }
+  },
+  mounted() {
+    // this.$router.go();
   },
 };
 </script>

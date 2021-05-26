@@ -26,6 +26,7 @@
       <!-- 관리자가 아니라면 -->
       <div v-else-if="getAccessToken">
         <div>
+        <span>{{user.user_id}}님 반갑습니다. </span>
         <v-btn to="/mypage">마이페이지</v-btn>
         <v-btn @click.prevent="onClickLogout">로그아웃</v-btn>
       </div>

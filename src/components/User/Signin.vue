@@ -39,7 +39,7 @@
         signin: function() {
         this.$store
             .dispatch('LOGIN', {user_id: this.user.user_id, pwd: this.user.pwd})
-            .then(() => this.$router.replace(`/`))
+            .then(() => this.$router.push(`/`))
             .catch(({ message }) => (this.msg = message));
         },
     },

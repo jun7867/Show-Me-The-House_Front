@@ -101,7 +101,12 @@
       <template #row-details="row">
         <b-card>
           <ul>
-            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+            <img src="@/assets/apt/apt1.jpg" />
+            <img src="@/assets/apt/aptDetail.png" />
+            <p>아파트 평수: {{row.item.area}}</p>
+            <li v-for="(value, key) in row.item" :key="key">
+              <!-- {{ key }}: {{ value }} -->
+              </li> 
           </ul>
         </b-card>
       </template>
@@ -190,6 +195,7 @@ export default {
       console.log(row.field.value);
     },
     addFavorite(no){
+      console.log(no);
       axios
                 .post(`http://localhost:8090/api/favorite`, {housedeal_no: no, user_no: this.user.user_no})
                 .then((response) => {

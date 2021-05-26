@@ -87,8 +87,10 @@
 
       <template #row-details="row">
         <b-card>
+          <img src="@/assets/apt/apt1.jpg" />
+          <img src="@/assets/apt/aptDetail.png" />
           <ul>
-            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+            <li v-for="(value, key) in row.item" :key="key"></li>
           </ul>
         </b-card>
       </template>
@@ -187,7 +189,9 @@ export default {
                 .catch(() => {
                     this.errored = true;
                 })
-                .finally(() => (this.loading = false));
+                .finally(() => (this.loading = false
+                ));
+        this.$router.go();
       }
     },
 }

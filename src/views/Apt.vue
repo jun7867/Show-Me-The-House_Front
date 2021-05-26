@@ -87,6 +87,9 @@
             :aptlist="apts"
         /></v-col>
       </v-row>
+
+      <div style="height: 150px">
+      </div>
       <apt-list
                   :aptlist="apts"
                   @select-apt="selectedApt"
