@@ -53,16 +53,20 @@
             <v-tabs v-model="tab" grow color="white" dark height="65px">
               <v-tab v-for="item in items" :key="item">
                 <p style="font-size:20px;">{{ item }}</p>
-              </v-tab>
+            </v-tab>
             </v-tabs>
-            <v-tabs-items v-model="tab">
-              <v-tab-item v-for="item in items" :key="item">
-                <v-card flat>
+            <b-card>
+              <b-table
+              :items="newlist"
+              :fields="fields"
+              stacked="md"
+              show-empty
+              small
+              >
 
-                  <v-card-text>{{ user }}</v-card-text>
-                </v-card>
-              </v-tab-item>
-            </v-tabs-items>
+              </b-table>
+              
+            </b-card>
           </v-card>
         </div>
       </v-col>
@@ -70,7 +74,7 @@
   </v-container>
 </template>
 <script>
-
+import axios from 'axios';
 export default {
   name: 'Main',
   data: () => ({
@@ -81,7 +85,14 @@ export default {
       require('../assets/khome2.jpeg'),
     ],
     tab: null,
-    items: ['아파트정보'],
+    items: ['실시간 추천 아파트 매물'],
+    fields: [
+            { key: 'dong', label: '동 이름' },
+            { key: 'aptName', label: '아파트 이름'},
+            { key: 'buildYear', label: '지어진 년도'},
+            { key: 'floor', label: '층수'},
+        ],
+    newlist:[],
     articles: [],
     cards: [
       {
@@ -93,6 +104,16 @@ export default {
     ],
   }),
   created() {
+    axios
+        .get(`http://localhost:8090/api/room/apt/newlist`)
+        .then(({ data }) => {
+        this.newlist = data;
+        console.log(this.newlist);
+        })
+        .catch(err => {
+            console.log(err);
+            alert("오류 발생!!");
+        });
   },
   components: {},
   methods: {
