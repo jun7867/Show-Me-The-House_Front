@@ -120,7 +120,6 @@ export default {
             console.log(err);
             alert("오류 발생!!");
         });
-
     axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
     axios
       .get(`http://localhost:8090/vue/api/member/info`)
@@ -131,19 +130,6 @@ export default {
         // this.$store.dispatch('LOGOUT').then(() => this.$router.replace('/'));
       });
   },
-  mounted() {
-    console.log(this.user);
-  },
-  watch: {
-    user: function(user){
-      console.log(user);
-      this.refresh();
-    }
-  },
-  methods: {
-    refresh() {
-      console.log(this.user);
-    }
-  },
+
 };
 </script>

@@ -73,7 +73,7 @@ export default {
       ],
     };
   },
-  created() {
+  updated() {
     // 가져온 Token값을 header에 넣어주는 작업 실시.
     axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
     axios
@@ -88,9 +88,6 @@ export default {
   computed: {
     ...mapGetters(['getAccessToken', 'getUserId', 'getUserName']),
   },
-  // updated() {
-  //   console.log(this.user.user_no);
-  // },
   methods: {
     onClickLogout() {
       this.$store
@@ -98,6 +95,9 @@ export default {
         .then(() => this.$router.replace('/').catch(() => {}));
       this.$router.go();
     },
+    refresh() {
+      console.log(this.user);
+    }
   },
 };
 </script>
