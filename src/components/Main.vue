@@ -83,6 +83,8 @@ export default {
     imgs: [
       require('../assets/khome1.jpeg'),
       require('../assets/khome2.jpeg'),
+      require('../assets/home1.jpg'),
+      require('../assets/home2.jpg'),
     ],
     tab: null,
     items: ['최신 실거래 아파트 매물'],
@@ -97,7 +99,7 @@ export default {
     cards: [
       {
         title: '관심 매물',
-        src: 'img/home1.jpg',
+        src: 'img/apt3.jpg',
         flex: 12,
       },
 

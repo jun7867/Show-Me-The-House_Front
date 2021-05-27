@@ -18,6 +18,7 @@
       <!-- 로그인 했다면 -->
       <div v-if="user.user_no == 1">
         <div>
+          <span>{{user.user_id}}님 반갑습니다. </span>
         <v-btn to="/list-user">관리자페이지</v-btn>
         <v-btn @click.prevent="onClickLogout">로그아웃</v-btn>
       </div>

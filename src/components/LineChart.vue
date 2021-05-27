@@ -1,24 +1,54 @@
+
+
 <script>
 import { Line } from "vue-chartjs";
-
 export default {
   extends: Line,
+   data() {
+     return {
+        countList: [0,0,0,0,0,0,0,0,0,0,0,0],
+        newList: [0,0,0,0,0,0,0,0,0,0,0,0],
+     }
+   },
+  props: {
+    aptlist: Array,
+  },
+  watch: {
+    aptlist: function(newList) {
+      newList.forEach((data) => {
+        this.countList[data.dealMonth-1]++;
+      });
+      this.paint();
+    }
+  },
+  created() {
+    this.paint();
+  },
   mounted() {
-    this.renderChart(
+    this.paint();
+  },
+  methods: {
+    paint() {
+      this.renderChart(
       {
         labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July"
+          "1월",
+          "2월",
+          "3월",
+          "4월",
+          "5월",
+          "6월",
+          "7월",
+          "8월",
+          "9월",
+          "10월",
+          "11월",
+          "12월",
         ],
         datasets: [
           {
-            label: "개포동 아파트 가격",
-            data: [2, 10, 5, 9, 0, 6, 20],
+            label: `2019년 ${this.aptlist[0].dong} 월별 매매량`,
+            data: this.countList,
             backgroundColor: "transparent",
             borderColor: "rgba(1, 116, 188, 0.50)",
             pointBackgroundColor: "rgba(171, 71, 188, 1)"
@@ -34,6 +64,7 @@ export default {
         }
       }
     );
-  }
+    }
+  },
 };
 </script>

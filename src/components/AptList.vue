@@ -74,18 +74,8 @@
         </b-button>
       </template>
       <template #cell(favorite)="row">
-
-
-        <!-- <label class="form-checkbox">
-    					<input type="checkbox" :value="row.item.no" v-model="selected">
-						<i class="form-icon"></i>
-  			</label> -->
-
         <b-button size="sm" @click="addFavorite(row)" > 등록 / 삭제 </b-button>
-
-
       </template>
-      
 
       <template #row-details="row">
         <b-card>
@@ -112,7 +102,11 @@
         ></b-pagination>
       </b-col>
   </b-container>
-  <LineChart/>
+
+  <LineChart
+    :aptlist="aptlist"
+  />
+  
   <div style="width:800px">
     
   </div>  
@@ -142,8 +136,6 @@ export default {
         Magazine: 30,
         Newspapers: 10
       },
-      user:'',
-      aptlistBydong: [],
       fields: [
             { key: 'no', label: 'No', sortable: true, sortDirection: 'desc' },
             { key: 'dong', label: '동 이름', sortable: true, sortDirection: 'desc' },
@@ -184,14 +176,7 @@ export default {
         });
 
   },
-  updated(){
-    if(this.aptlistBydong.value)
-      this.aptlistBydong.value = !this.aptlistBydong.value;
-  },
   methods: {
-    // selectImage: function(img) {
-    //   this.$emit('select-img', img);
-    // },
     onFiltered(filteredItems) {
         this.totalRows = filteredItems.length
         this.currentPage = 1
@@ -243,7 +228,6 @@ export default {
   },
 };
 </script>
-
 
 <style>
     .favoriting{
