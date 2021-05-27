@@ -113,7 +113,21 @@ export default {
             console.log(err);
             alert("오류 발생!!");
         });
+<<<<<<< HEAD
 
   },
+=======
+    axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
+    axios
+      .get(`http://localhost:8090/vue/api/member/info`)
+      .then((response) => {
+        this.user = response.data.user;
+      })
+      .catch(() => {
+        // this.$store.dispatch('LOGOUT').then(() => this.$router.replace('/'));
+      });
+  },
+
+>>>>>>> dadf9e234613b8d1574b2766d34ba001dbbfcd4d
 };
 </script>

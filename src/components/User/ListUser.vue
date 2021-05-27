@@ -90,7 +90,7 @@
       </template>
     </b-table>
 
-    <b-col sm="7" md="6" class="my-1" >
+    <b-col sm="7" md="6" class="my-1 mx-auto" >
         <b-pagination
           v-model="currentPage"
           :total-rows="totalRows"
@@ -177,8 +177,3 @@ import axios from 'axios';
     }
   }
 </script>
-<style scoped>
-ul {
-  display: inline-block
-}
-</style>
