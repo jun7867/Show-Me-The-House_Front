@@ -117,7 +117,7 @@
 <script>
 
 import axios from 'axios';
-import LineChart from '@/components/LineChart.vue'
+import LineChart from '@/components/Apt/LineChart.vue'
 
 
 export default {

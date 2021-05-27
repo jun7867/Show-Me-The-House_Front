@@ -57,10 +57,6 @@ export default {
     dong: String,
     aptlist: Array,
   },
-  created(){
-    // this.addScript();
-    // this.initMap();
-  },
   mounted() {
     if (window.kakao && window.kakao.maps) {
       this.initMap();
@@ -70,7 +66,6 @@ export default {
   },
   updated() {
     this.addMarker();
-    
   },
   methods: {
     initMap() {
@@ -311,8 +306,6 @@ export default {
       this.placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
       this.placeOverlay.setMap(this.map);  
     },
-
-
     // 각 카테고리에 클릭 이벤트를 등록합니다
      addCategoryClickEvent() {
        
@@ -323,17 +316,14 @@ export default {
       for (var i=0; i<children.length; i++) {
           // console.log(this.children[i]);
           children[i].onclick = this.onClickCategory; 
-    
       }
     },
-
     // 카테고리를 클릭했을 때 호출되는 함수입니다
       onClickCategory (event) { 
       let child=event.target;
       if(event.target.tagName == 'SPAN'){
         child=event.target.parentNode;
       }
-
       var id = child.id;
       var className = child.className;
 

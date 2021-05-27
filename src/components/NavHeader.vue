@@ -52,11 +52,9 @@
  <script>
 import { mapGetters } from 'vuex';
 import axios from 'axios';
-// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: 'Header',
-
   data() {
     return {
       user: '',
@@ -82,15 +80,12 @@ export default {
         this.user = response.data.user;
       })
       .catch(() => {
-        // this.$store.dispatch('LOGOUT').then(() => this.$router.replace('/'));
+        alert("error");
       });
   },
   computed: {
     ...mapGetters(['getAccessToken', 'getUserId', 'getUserName']),
   },
-  // updated() {
-  //   console.log(this.user.user_no);
-  // },
   methods: {
     onClickLogout() {
       this.$store

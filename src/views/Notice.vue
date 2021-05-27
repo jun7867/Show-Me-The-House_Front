@@ -76,13 +76,9 @@ export default {
       .get(`http://localhost:8090/vue/api/member/info`)
       .then((response) => {
         this.user = response.data.user;
-        
       })
       .catch(() => {
-        // this.$store.dispatch('LOGOUT').then(() => this.$router.replace('/'));
       });
-
-    
   }
 };
 </script>

@@ -103,8 +103,8 @@
 
 import KakaoMap from '@/components/KakaoMap.vue';
 import { mapGetters} from "vuex";
-import AptSearchBar from '@/components/AptSearchBar.vue';
-import AptList from '@/components/AptList.vue';
+import AptSearchBar from '@/components/Apt/AptSearchBar.vue';
+import AptList from '@/components/Apt/AptList.vue';
 export default {
   name: 'Apt',
   components: {
@@ -136,14 +136,11 @@ export default {
   },
   methods: {
     sendAptName: function(aptname) {
-      console.log(aptname+"!!!");
       this.$store.dispatch("getAptName",`/room/apt/aptName/`+aptname);
-
     },
     sendDongName: function() {
       console.log(this.selectDong+"@@@");
       this.$store.dispatch("getAptName",`/room/apt/dong/`+this.selectDong);
-
     },
     selectedApt: function(apt) {
       this.selectApt = apt;

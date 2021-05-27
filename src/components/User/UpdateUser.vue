@@ -35,7 +35,7 @@ export default {
             this.user = response.data;
         })
         .catch(() => {
-            // this.$store.dispatch('LOGOUT').then(() => this.$router.replace('/'));
+            alert("error")
         });
     },
     methods: {
@@ -52,12 +52,6 @@ export default {
             });
             this.submitted = true;
         },
-
     },
-
 }
 </script>
-
-<style>
-
-</style>

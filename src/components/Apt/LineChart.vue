@@ -1,5 +1,3 @@
-
-
 <script>
 import { Line } from "vue-chartjs";
 export default {
@@ -15,6 +13,7 @@ export default {
   },
   watch: {
     aptlist: function(newList) {
+      this.countList= [0,0,0,0,0,0,0,0,0,0,0,0],
       newList.forEach((data) => {
         this.countList[data.dealMonth-1]++;
       });
@@ -47,7 +46,7 @@ export default {
         ],
         datasets: [
           {
-            label: `2019년 ${this.aptlist[0].dong} 월별 매매량`,
+            label: `${this.aptlist[0].dong} 월별 매매량`,
             data: this.countList,
             backgroundColor: "transparent",
             borderColor: "rgba(1, 116, 188, 0.50)",

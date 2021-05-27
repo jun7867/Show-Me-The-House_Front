@@ -6,7 +6,6 @@ import createPersistedState from 'vuex-persistedstate';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  //npm install —-save vuex-persistedstate
   plugins: [createPersistedState()],
   state: {
     notices: [],
@@ -17,7 +16,6 @@ export default new Vuex.Store({
     sidoName: '', // 시도 이름
     gugunName: '', // 구군 이름
     apts: [], // 아파트 정보 리스트
-
     accessToken: null,
     userId: '',
     userName: '',

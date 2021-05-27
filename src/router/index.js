@@ -12,7 +12,6 @@ import Mypage from "@/components/User/Mypage.vue";
 import UpdateUser from "@/components/User/UpdateUser.vue";
 import ListUser from "@/components/User/ListUser.vue";
 import Favorite from "@/components/Favorite.vue";
-
 import Apt from '@/views/Apt.vue';
 
 Vue.use(VueRouter);
@@ -97,7 +96,6 @@ const routes = [
       name: "Favorite",
       component: Favorite,
     },
-
 ];
 
 const router = new VueRouter({

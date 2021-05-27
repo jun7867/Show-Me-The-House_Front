@@ -9,7 +9,7 @@
             <v-layout fill-height align-end pb-4 mb-4>
               <v-flex xs12>
                 <v-card color="black" class="pa-2">
-                  <span class="headline white--text">Happy House </span>
+                  <span class="headline white--text">Happy House</span>
                 </v-card>
               </v-flex>
             </v-layout>
@@ -20,7 +20,7 @@
     <br /><br />
     <br />
     <v-row>
-      <!-- 관심 매물 카드 -->
+      <!-- 관심 매물 -->
       <v-col cols="4">
         <v-card class="mx-auto" max-width="100%" to="/favorite">
           <v-toolbar color="black" dark>
@@ -46,7 +46,7 @@
           </v-container>
         </v-card>
       </v-col>
-      <!-- 아파트정보 카드 , 나중에 정보 받아와야함-->
+      <!-- 아파트 정보 -->
       <v-col cols="8">
         <div class="around">
           <v-card class="mx-auto" max-width="100%">
@@ -63,9 +63,7 @@
               show-empty
               small
               >
-
-              </b-table>
-              
+              </b-table>             
             </b-card>
           </v-card>
         </div>
@@ -74,12 +72,10 @@
   </v-container>
 </template>
 <script>
-import {mapGetters} from "vuex";
 import axios from 'axios';
 export default {
   name: 'Main',
   data: () => ({
-    user: '',
     model: 0,
     imgs: [
       require('../assets/khome1.jpeg'),
@@ -103,12 +99,9 @@ export default {
         src: 'img/apt3.jpg',
         flex: 12,
       },
-
     ],
   }),
-   computed:{
-    ...mapGetters(['getAccessToken', 'getUserId', 'getUserName'])
-  },
+   
   created() {
     axios
         .get(`http://localhost:8090/api/room/apt/newlist`)
@@ -121,29 +114,6 @@ export default {
             alert("오류 발생!!");
         });
 
-    axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
-    axios
-      .get(`http://localhost:8090/vue/api/member/info`)
-      .then((response) => {
-        this.user = response.data.user;
-      })
-      .catch(() => {
-        // this.$store.dispatch('LOGOUT').then(() => this.$router.replace('/'));
-      });
-  },
-  mounted() {
-    console.log(this.user);
-  },
-  watch: {
-    user: function(user){
-      console.log(user);
-      this.refresh();
-    }
-  },
-  methods: {
-    refresh() {
-      console.log(this.user);
-    }
   },
 };
 </script>
