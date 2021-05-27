@@ -1,7 +1,8 @@
 <template>
   <div>
     <h4 class="text-center">공지사항 목록</h4>
-    <div class="m-3 text-left">
+
+    <div class="m-3 text-left" v-if="user.user_no ==1">
       <button class="btn btn-primary" @click="movePage">공지사항 등록</button>
     </div>
     <div v-if="notices.length > 0">
@@ -41,16 +42,18 @@
 // import http from '@/util/http-common.js'
 import moment from "moment";
 import { mapGetters} from "vuex";
+import axios from 'axios';
 export default {
   name: "notice",
   data() {
     return {
+      user: '',
       perPage: 3,
       currentPage: 1,
     }
   },
   computed:{
-    ...mapGetters(["notices"]),
+    ...mapGetters(["notices",'getAccessToken', 'getUserId', 'getUserName']),
     rows() {
         return this.notices.length
       }
@@ -67,6 +70,19 @@ export default {
   },
   created() {
      this.$store.dispatch("getNotices");
+     
+     axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
+    axios
+      .get(`http://localhost:8090/vue/api/member/info`)
+      .then((response) => {
+        this.user = response.data.user;
+        
+      })
+      .catch(() => {
+        // this.$store.dispatch('LOGOUT').then(() => this.$router.replace('/'));
+      });
+
+    
   }
 };
 </script>

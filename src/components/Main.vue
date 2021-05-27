@@ -74,6 +74,7 @@
   </v-container>
 </template>
 <script>
+import {mapGetters} from "vuex";
 import axios from 'axios';
 export default {
   name: 'Main',
@@ -105,11 +106,10 @@ export default {
 
     ],
   }),
-
+   computed:{
+    ...mapGetters(['getAccessToken', 'getUserId', 'getUserName'])
+  },
   created() {
-
-    this.init();
-
     axios
         .get(`http://localhost:8090/api/room/apt/newlist`)
         .then(({ data }) => {
@@ -120,18 +120,30 @@ export default {
             console.log(err);
             alert("오류 발생!!");
         });
-  },
-  components: {},
-  methods: {
-    init() {
-      
-    }
-    // moveFavorite() : {
 
-    // }
+    axios.defaults.headers.common['auth-token'] = this.$store.state.accessToken;
+    axios
+      .get(`http://localhost:8090/vue/api/member/info`)
+      .then((response) => {
+        this.user = response.data.user;
+      })
+      .catch(() => {
+        // this.$store.dispatch('LOGOUT').then(() => this.$router.replace('/'));
+      });
   },
   mounted() {
-    // this.$router.go();
+    console.log(this.user);
+  },
+  watch: {
+    user: function(user){
+      console.log(user);
+      this.refresh();
+    }
+  },
+  methods: {
+    refresh() {
+      console.log(this.user);
+    }
   },
 };
 </script>
