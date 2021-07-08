@@ -1,5 +1,6 @@
 # show-me-the-house
 
+[동일 프로젝트 백엔드](https://github.com/jun7867/Show-Me-The-House_Back)
 
 ## 프로젝트 목적
 
